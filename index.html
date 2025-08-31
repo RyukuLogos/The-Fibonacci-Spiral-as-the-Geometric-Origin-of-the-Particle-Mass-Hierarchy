@@ -1,314 +1,152 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>素粒子質量階層性の幾何学的起源としてのフィボナッチ螺旋</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>素粒子質量階層性の幾何学的起源としてのフィボナッチ螺旋 / The Fibonacci Spiral as the Geometric Origin of the Particle Mass Hierarchy</title>
+  <meta name="description" content="Dual-language landing page for two PDFs: 日本語『素粒子質量階層性の幾何学的起源としてのフィボナッチ螺旋』(RAT.pdf) and English 'The Fibonacci Spiral as the Geometric Origin of the Particle Mass Hierarchy'." />
+  <link rel="alternate" hreflang="ja" href="#" />
+  <link rel="alternate" hreflang="en" href="#" />
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --accent-2: #a78bfa;
+      --border: #1f2937;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 20% -10%, #111827 20%, #0b0f17 60%, #070a10 100%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px 80px; }
+    header { display: grid; gap: 10px; margin-bottom: 16px; }
+    .title { font-weight: 800; line-height: 1.2; letter-spacing: .2px; }
+    .title-ja { font-size: clamp(20px, 2.6vw, 30px); }
+    .title-en { font-size: clamp(16px, 2.1vw, 22px); color: var(--muted); }
+    .lang-toggle { display: inline-flex; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 6px; border-radius: 999px; }
+    .lang-toggle button { appearance: none; border: 0; padding: 8px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; color: var(--text); background: transparent; }
+    .lang-toggle button.active { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #0b0f17; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    @media (min-width: 800px) {
+      .grid { grid-template-columns: 1.05fr .95fr; align-items: start; }
+    }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); border: 1px solid var(--border); border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+    .card h2 { margin: 0 0 6px; font-size: 18px; }
+    .card .sub { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border); background: #0d1420; color: var(--text); text-decoration: none; font-weight: 700; white-space: nowrap; }
+    .btn:hover { outline: 2px solid rgba(96,165,250,.35); }
+    .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #0b0f17; border: 0; }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            color: #555;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-
-        .description {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 40px;
-            line-height: 1.8;
-        }
-
-        .pdf-links {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .pdf-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 15px;
-            padding: 25px;
-            min-width: 250px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            border: none;
-            display: block;
-        }
-
-        .pdf-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .pdf-card:hover::before {
-            left: 100%;
-        }
-
-        .pdf-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .pdf-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .pdf-card p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-bottom: 15px;
-        }
-
-        .pdf-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .language-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .lang-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .lang-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .content.en .ja-text {
-            display: none;
-        }
-
-        .content.ja .en-text {
-            display: none;
-        }
-
-        .footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #777;
-            font-size: 0.9rem;
-        }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .github-link:hover {
-            color: #764ba2;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1.4rem;
-            }
-
-            .pdf-links {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .pdf-card {
-                min-width: 200px;
-            }
-        }
-    </style>
+    .viewer { height: 75vh; width: 100%; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #0d1420; }
+    .viewer iframe { width: 100%; height: 100%; border: 0; }
+    .hint { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    footer { margin-top: 16px; color: var(--muted); font-size: 12px; }
+    kbd { background: #111827; border: 1px solid var(--border); padding: 2px 6px; border-radius: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .hide { display: none; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="language-toggle">
-            <button class="lang-btn active" id="btn-ja">日本語</button>
-            <button class="lang-btn" id="btn-en">English</button>
+  <div class="wrap">
+    <header>
+      <div class="title title-ja">素粒子質量階層性の幾何学的起源としてのフィボナッチ螺旋</div>
+      <div class="title title-en">The Fibonacci Spiral as the Geometric Origin of the Particle Mass Hierarchy</div>
+      <div class="lang-toggle" role="tablist" aria-label="Language toggle">
+        <button id="tab-ja" class="active" role="tab" aria-selected="true" aria-controls="panel-ja">日本語</button>
+        <button id="tab-en" role="tab" aria-selected="false" aria-controls="panel-en">English</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Left column: language panels -->
+      <section>
+        <!-- JA Panel -->
+        <div id="panel-ja" role="tabpanel" aria-labelledby="tab-ja" class="card">
+          <h2>日本語版 PDF</h2>
+          <p class="sub">タイトル：素粒子質量階層性の幾何学的起源としてのフィボナッチ螺旋</p>
+          <div class="btn-row">
+            <!-- Relative links assume this HTML and the PDFs are in the same folder of your GitHub repo -->
+            <a class="btn primary" href="RAT.pdf" target="_blank" rel="noopener">新しいタブで開く</a>
+            <a class="btn" href="#" data-open="RAT.pdf">ページ内プレビュー</a>
+            <a class="btn" href="RAT.pdf" download>ダウンロード</a>
+          </div>
         </div>
 
-        <div class="content ja" id="content">
-            <h1 class="ja-text">素粒子質量階層性の幾何学的起源としてのフィボナッチ螺旋</h1>
-            <h1 class="en-text">The Fibonacci Spiral as the Geometric Origin of the Particle Mass Hierarchy</h1>
-            
-            <p class="subtitle ja-text">理論物理学研究論文</p>
-            <p class="subtitle en-text">Theoretical Physics Research Paper</p>
-
-            <div class="description">
-                <p class="ja-text">
-                    本研究では、フィボナッチ螺旋の幾何学的性質と素粒子の質量階層性の関係について探究しています。
-                    黄金比に基づく螺旋構造が、標準模型における粒子質量の分布に与える影響を数学的に解析し、
-                    新たな理論的枠組みを提示します。
-                </p>
-                <p class="en-text">
-                    This research explores the relationship between the geometric properties of the Fibonacci spiral 
-                    and the mass hierarchy of elementary particles. We mathematically analyze the influence of 
-                    golden ratio-based spiral structures on particle mass distribution in the Standard Model 
-                    and present a new theoretical framework.
-                </p>
-            </div>
-
-            <div class="pdf-links">
-                <div class="pdf-card" id="pdf-japanese">
-                    <div class="pdf-icon">📄</div>
-                    <h3 class="ja-text">日本語版PDF</h3>
-                    <h3 class="en-text">Japanese Version</h3>
-                    <p class="ja-text">日本語で書かれた完全版論文</p>
-                    <p class="en-text">Complete paper in Japanese</p>
-                </div>
-
-                <div class="pdf-card" id="pdf-english">
-                    <div class="pdf-icon">📄</div>
-                    <h3 class="ja-text">英語版PDF</h3>
-                    <h3 class="en-text">English Version</h3>
-                    <p class="ja-text">英語で書かれた完全版論文</p>
-                    <p class="en-text">Complete paper in English</p>
-                </div>
-            </div>
-
-            <div class="footer">
-                <p class="ja-text">
-                    <span class="github-link" id="github-link">
-                        <span>⚡</span>
-                        GitHubリポジトリで詳細を見る
-                    </span>
-                </p>
-                <p class="en-text">
-                    <span class="github-link" id="github-link-en">
-                        <span>⚡</span>
-                        View details on GitHub Repository
-                    </span>
-                </p>
-            </div>
+        <!-- EN Panel -->
+        <div id="panel-en" role="tabpanel" aria-labelledby="tab-en" class="card hide">
+          <h2>English PDF</h2>
+          <p class="sub">Title: The Fibonacci Spiral as the Geometric Origin of the Particle Mass Hierarchy</p>
+          <div class="btn-row">
+            <a class="btn primary" href="The_Fibonacci_Spiral_as_the_Geometric_Origin_of_the_Particle_Mass_Hierarchy.pdf" target="_blank" rel="noopener">Open in new tab</a>
+            <a class="btn" href="#" data-open="The_Fibonacci_Spiral_as_the_Geometric_Origin_of_the_Particle_Mass_Hierarchy.pdf">Preview in page</a>
+            <a class="btn" href="The_Fibonacci_Spiral_as_the_Geometric_Origin_of_the_Particle_Mass_Hierarchy.pdf" download>Download</a>
+          </div>
         </div>
-    </div>
+      </section>
 
-    <script>
-        // DOM要素を取得
-        const btnJa = document.getElementById('btn-ja');
-        const btnEn = document.getElementById('btn-en');
-        const content = document.getElementById('content');
-        const pdfJapanese = document.getElementById('pdf-japanese');
-        const pdfEnglish = document.getElementById('pdf-english');
-        const githubLink = document.getElementById('github-link');
-        const githubLinkEn = document.getElementById('github-link-en');
+      <!-- Right column: inline PDF viewer -->
+      <aside class="card">
+        <h2 style="margin-bottom:10px">プレビュー / Preview</h2>
+        <div class="viewer">
+          <!-- Using an iframe increases compatibility on GitHub Pages. -->
+          <iframe id="pdfFrame" src="" title="PDF viewer"></iframe>
+        </div>
+        <p class="hint">同じリポジトリ内に <kbd>RAT.pdf</kbd> と <kbd>The_Fibonacci_Spiral_as_the_Geometric_Origin_of_the_Particle_Mass_Hierarchy.pdf</kbd> を置いてください。相対パスはこのHTMLと同じフォルダ想定です。</p>
+      </aside>
+    </main>
 
-        // 言語切り替え機能
-        btnJa.addEventListener('click', function() {
-            content.className = 'content ja';
-            btnJa.classList.add('active');
-            btnEn.classList.remove('active');
-        });
+    <footer>
+      &copy; <span id="y"></span> – GitHub Pages friendly single-file HTML. No build tools required.
+    </footer>
+  </div>
 
-        btnEn.addEventListener('click', function() {
-            content.className = 'content en';
-            btnEn.classList.add('active');
-            btnJa.classList.remove('active');
-        });
+  <script>
+    // Year stamp
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-        // PDF開く機能
-        pdfJapanese.addEventListener('click', function() {
-            const url = 'https://github.com/RyukuLogos/The-Fibonacci-Spiral-as-the-Geometric-Origin-of-the-Particle-Mass-Hierarchy/raw/main/日本語RAT.pdf';
-            window.open(url, '_blank');
-        });
+    // Language toggle behavior
+    const tabJa = document.getElementById('tab-ja');
+    const tabEn = document.getElementById('tab-en');
+    const panelJa = document.getElementById('panel-ja');
+    const panelEn = document.getElementById('panel-en');
 
-        pdfEnglish.addEventListener('click', function() {
-            const url = 'https://github.com/RyukuLogos/The-Fibonacci-Spiral-as-the-Geometric-Origin-of-the-Particle-Mass-Hierarchy/raw/main/The_Fibonacci_Spiral_as_the_Geometric_Origin_of_the_Particle_Mass_Hierarchy.pdf';
-            window.open(url, '_blank');
-        });
+    function activate(lang) {
+      const isJa = lang === 'ja';
+      tabJa.classList.toggle('active', isJa);
+      tabEn.classList.toggle('active', !isJa);
+      tabJa.setAttribute('aria-selected', String(isJa));
+      tabEn.setAttribute('aria-selected', String(!isJa));
+      panelJa.classList.toggle('hide', !isJa);
+      panelEn.classList.toggle('hide', isJa);
+      // When switching, load the corresponding PDF into the preview if empty
+      const frame = document.getElementById('pdfFrame');
+      if (!frame.getAttribute('src')) {
+        frame.setAttribute('src', isJa ? 'RAT.pdf' : 'The_Fibonacci_Spiral_as_the_Geometric_Origin_of_the_Particle_Mass_Hierarchy.pdf');
+      }
+    }
 
-        // GitHubリンク
-        githubLink.addEventListener('click', function() {
-            window.open('https://github.com/RyukuLogos/The-Fibonacci-Spiral-as-the-Geometric-Origin-of-the-Particle-Mass-Hierarchy', '_blank');
-        });
+    tabJa.addEventListener('click', () => activate('ja'));
+    tabEn.addEventListener('click', () => activate('en'));
 
-        githubLinkEn.addEventListener('click', function() {
-            window.open('https://github.com/RyukuLogos/The-Fibonacci-Spiral-as-the-Geometric-Origin-of-the-Particle-Mass-Hierarchy', '_blank');
-        });
-    </script>
+    // In-page preview buttons
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-open]');
+      if (!t) return;
+      e.preventDefault();
+      const href = t.getAttribute('data-open');
+      const frame = document.getElementById('pdfFrame');
+      frame.setAttribute('src', href);
+    });
+
+    // Initialize default state
+    activate('ja');
+  </script>
 </body>
 </html>
